@@ -1,7 +1,11 @@
-# Title:
-# Description
-# Inputs:
-# Outputs:
+# Title: Data Preparation
+# Description: Adds new columns: name (player name), minute (minutes elapsed at shot time).
+#              Changes the values of shot_made_flag column from "y" to "shot_yes" and "n" to "shot_no".
+#              Combines all the player data tables into one and exports it to ../data/shots-data.csv.
+#              Creates text files summarizing each input as well as shots_data.csv in the ../output directory.
+# Inputs: stephen-curry.csv, klay-thompson.csv, kevin-durant.csv, draymond-green.csv, andre-iguodala.csv
+# Outputs: shots-data.csv, shots-data-summary.txt, stephen-curry-summary.txt, klay-thompson-summary.txt,
+#          kevin-durant-summary.txt, draymond-green-summary.txt, andre-iguodala-summary.txt
 
 curry = read.csv("../data/stephen-curry.csv", stringsAsFactors = FALSE)
 thompson = read.csv("../data/klay-thompson.csv", stringsAsFactors = FALSE)
@@ -50,8 +54,9 @@ sink()
 
 shots_data = rbind(curry, thompson, durant, green, iguodala)
 
-write_csv(shots_data, '../data/shots-data.csv')
+write.csv(shots_data, '../data/shots-data.csv')
 
 sink('../output/shots-data-summary.txt')
 summary(shots_data)
 sink()
+

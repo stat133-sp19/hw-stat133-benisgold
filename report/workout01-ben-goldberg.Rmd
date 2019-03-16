@@ -1,10 +1,41 @@
 ---
-title: "Workout01"
+title: "Golden State Warriors: An Analysis"
 output: github_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
 ```
 
+```{r echo=FALSE}
+shots = read.csv("../data/shots-data.csv", stringsAsFactors = FALSE)
+```
 
+## Introduction
+The Golden State Warriors are the hottest NBA team in the nation right now. Their recent rise to fame over the past few years has brought them fame, glory, and unprecedented domination on the courts. What's powering this absolutely beast team, you may ask? Let's take a deep dive into the shooting performance of some of their key players: Andre Iguodala, Draymond Green, Kevin Durant, Klay Thompson, and Stephen Curry.
+
+## Analysis
+Here's a look at their shooting spreads and effective shooting percentages:
+
+```{r}
+knitr::include_graphics('../images/gsw-shot-charts.png')
+```
+
+#### 2-Pointer Effective Shooting % by Player
+```{r}
+knitr::kable(arrange(mutate(summarise(group_by(shots, name), total = sum(shot_type == "2PT Field Goal"), made = sum(shot_type == "2PT Field Goal" & shot_made_flag == "shot_yes")), perc_made = made / total), desc(perc_made)))
+```
+
+#### 3-Pointer Effective Shooting % by Player
+```{r}
+knitr::kable(arrange(mutate(summarise(group_by(shots, name), total = sum(shot_type == "3PT Field Goal"), made = sum(shot_type == "3PT Field Goal" & shot_made_flag == "shot_yes")), perc_made = made / total), desc(perc_made)))
+```
+
+#### Overall Effective Shooting % by Player
+```{r}
+knitr::kable(arrange(mutate(summarise(group_by(shots, name), total = n() , made = sum(shot_made_flag == "shot_yes")), perc_made = made / total), desc(perc_made)))
+```
+
+### Interpretation
+These tables and visualizations reveal a few interesting facts about the Golden State Warriors. The top scorers in the 2016 season, Klay Thompson and Steph Curry, had some of the lowest overall effective shooting percentages out of the five players. However, They were the most accurate 3-point shooters of the bunch. Meanwhile, Kevin Durant and Andre Iguodala, who had the highest overall effective shooting percentages, were also the most accurate 2-point shooters. Therefore, it seems like these players specialize in either 2-point shots or 3-point shots, but not both. Draymond Green has the effective lowest shooting percentage in all categories, and is the second lowest scorer. I guess he just sucks!
