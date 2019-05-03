@@ -1,0 +1,78 @@
+---
+title: "Getting Started with binomial"
+author: "Ben Goldberg"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to cointoss}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo = FALSE, message = FALSE}
+knitr::opts_chunk$set(collapse = T, comment = "#>")
+library(binomial)
+```
+
+## Coin Tossing
+
+The `"binomial"` R package implements functions for calculating probabilities of a binomial random variable and related calculations such as the probability distribution, the expected value, variance, etc.
+
+
+## Binomial Distribution Statistics
+
+The user can easily make a variety of calculations regarding binomial distributions as long as they know the number of trials (1st parameter) and the probability of success (2nd parameter). These statistics include: mean, variance, mode, skewness, and kurtosis.
+
+Here are some examples:
+
+```{r}
+bin_mean(10, 0.3)
+bin_variance(10, 0.3)
+bin_mode(10, 0.3)
+bin_skewness(10, 0.3)
+bin_kurtosis(10, 0.3)
+```
+
+These functions can take in numeric scalars as well as vectors.
+
+Another interesting function is `bin_choose()`. This function calculates the number of combinations in which k successes can occur in n trials.
+
+```{r}
+bin_choose(n = 5, k = 2)
+```
+
+
+## Probability Distribution Analysis
+
+Use the function `bin_probability()` to calculate the probability of getting exactly k successes within n trials.
+
+```{r}
+bin_probability(success = 2, trials = 5, prob = 0.5)
+```
+
+To see this type of data on a broader scale, you can use the function `bin_distribution()`:
+
+```{r}
+dist = bin_distribution(trials = 5, prob = 0.5)
+plot(dist)
+```
+
+This calculates the probability of getting exactly k successes for all possible values of k. As you can see, there is a built-in plotting method to help visualize this data.
+
+For even more info, use `bin_cumulative()` to see the cumulative probabilities of this distribution. The data type that is returned also comes with a built-in plotting method.
+
+```{r}
+dist = bin_cumulative(trials = 5, prob = 0.5)
+plot(dist)
+```
+
+
+
+## Binomial Distribution Object
+
+Use the method `bin_variable()` to create a binomial distribution object to easily store and visualize data regarding a custom distribution. This object comes with built-in print and summary methods.
+
+```{r}
+bin = bin_variable(trials = 10, p = 0.3)
+summary(bin)
+```
